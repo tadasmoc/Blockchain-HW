@@ -2,13 +2,19 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <bitset>
+#include <vector>
 
-class hash
+class Hash
 {
 private:
-
+	std::string input;
+	std::string hash;
 public:
-	std::string hashReadConsole();
-	std::string hashReadConsole(std::string fileName);
-
+	void hashReadConsole();
+	void hashReadFile(std::string fileName);
+	void toBinary(std::string input);
+	void padding(std::string bin);
+	void compression(std::string bin);
 };

@@ -2,13 +2,23 @@
 #include <string>
 #include "hash.h"
 
-int main()
-{
-	std::cout << "Program has started" << std::endl;
+int main(int argc, char* argv[])
+{	
+	std::cout << "Program has started\n" << std::endl;
 
-	hash h;
+	Hash hash;
 
-	std::cout << h.hashReadConsole() << std::endl;
+	if (argc == 1) {
+		hash.hashReadConsole();
+	}
+	else if (argc == 2) {
+		hash.hashReadFile(argv[1]);
+	}
+	else
+	{
+		std::cout << "Invalid argument number" << std::endl;
+	}
+
 
 
 
