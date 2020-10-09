@@ -41,9 +41,11 @@ public:
 
 	void hashReadConsole();
 	void hashReadFile(std::string fileName);
-	void toBinary(std::string input);
+	std::string toBinary(std::string text);
 	void padding(std::string bin);
 	void compression(std::string bin);
 	std::string xorString(std::string a, std::string b);
 	void binToHex(std::vector<std::string> hashBin);
+	std::string binEnd();
+
 };
