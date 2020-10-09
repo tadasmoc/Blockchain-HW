@@ -6,7 +6,7 @@ void Hash::hashReadConsole()
 	std::getline(std::cin, input);
 	std::cout << "input: " << input << std::endl;
 
-	toBinary(input);
+	padding(input);
 }
 
 void Hash::hashReadFile(std::string fileName)
@@ -15,51 +15,50 @@ void Hash::hashReadFile(std::string fileName)
 	std::getline(file, input);
 	std::cout << "input: " << input << std::endl;
 
-	toBinary(input);
+	padding(input);
 }
 
-void Hash::toBinary(std::string input)
+std::string Hash::toBinary(std::string text)
 {
-	std::string bin;
+	std::string binary; // String to hold binary string value.
 
-	/*for (int i = 0; i <= input.size(); i++)
+	for (std::size_t i = 0; i < text.size(); ++i)
 	{
-		int val = int(input[i]);
-		val = 
-
-		// Convert ASCII value to binary 
-		std::string bin = "";
-		while (val > 0)
-		{
-			(val % 2) ? bin.push_back('1') :
-				bin.push_back('0');
-			val /= 2;
-		}
-		reverse(bin.begin(), bin.end());
-
-		std::cout << bin << " ";
-	}
-}*/
-
-	for (std::size_t i = 0; i < input.size(); ++i)
-	{
-		bin += std::bitset<8>(input[i]).to_string();
+		binary += std::bitset<8>(text[i]).to_string();
 	}
 
-	//std::cout << "converted to bin: " << bin << std::endl;
+	std::cout << "Converted to bin: " << binary << std::endl;
 
-	padding(bin);
+	return binary;
+}
+
+std::string Hash::binEnd()
+{
+	std::string result;
+
+	for (int i = 0; i < input.size(); i++) {
+		result += std::to_string(int(input[i]) * i);
+		std::cout << "result: " << result << std::endl;
+	}
+
+	return toBinary(result);
 }
 
 void Hash::padding(std::string bin)
 {
-	if (bin.size() % 512 != 0) {
+	bin = toBinary(bin);
+	std::string BinEnd = binEnd(); // A string generated from the length of input and ASCII values. This will be added to the end of padded bin variable.
+	
+	if ((bin.size() + BinEnd.size()) % 512 != 0) {                    // kintamsis galetu saugoti .size(), galimai butu greiciau, reik istestuot.
 		bin += "1";
-		while (bin.size() % 512 != 0) {
-			bin += "0";
-		}
 	}
-	//std::cout << "padded: " << bin << std::endl;
+		
+	while ((bin.size() + BinEnd.size()) % 512 != 0) {
+		bin += "0";
+	}
+	bin += BinEnd;
+
+	std::cout << "padded: " << bin << std::endl;
 
 	compression(bin);
 }
