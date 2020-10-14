@@ -10,13 +10,14 @@
 #include <bitset>
 #include <vector>
 #include <deque>
+#include <algorithm>
 
 
 class Hash
 {
 private:
 	std::string input;
-	std::string hash;
+	//std::string hash;
 public:
 	std::string A = "01010010011000010111001101110000";
 	std::string B = "01110101011101000110100101101110";
@@ -39,13 +40,30 @@ public:
 		"01100101011011100010000100111111"
 	};
 
+
+	// Default constructor
+	Hash();
+
+	// Constructor for hashig from file
+	Hash(std::string fileName);
+
+	// Constructor for timing hashes
+	Hash(int x, std::string input);
+
+	// Destructor
+	~Hash();
+
+
 	void hashReadConsole();
 	void hashReadFile(std::string fileName);
 	std::string toBinary(std::string text);
 	void padding(std::string bin);
 	void compression(std::string bin);
 	std::string xorString(std::string a, std::string b);
+	std::string binaryAddition(std::string a, std::string b);
 	void binToHex(std::vector<std::string> hashBin);
 	std::string binEnd();
+	void expand(std::deque<std::string> &block32);
+
 
 };

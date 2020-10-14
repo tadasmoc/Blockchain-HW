@@ -1,5 +1,27 @@
 #include "hash.h"
 
+Hash::Hash()
+{
+	hashReadConsole();
+}
+
+Hash::Hash(std::string fileName)
+{
+	hashReadFile(fileName);
+}
+
+Hash::Hash(int x, std::string in)
+{
+	input = in;
+	padding(input);
+}
+
+Hash::~Hash()
+{
+
+}
+
+
 void Hash::hashReadConsole()
 {
 	std::cout << "Please type in your value:" << std::endl;
@@ -63,11 +85,40 @@ void Hash::padding(std::string bin)
 	compression(bin);
 }
 
+std::string Hash::binaryAddition(std::string a, std::string b)
+{
+	std::string result = "";
+	int temp = 0;
+	int size_a = a.size() - 1;
+	int size_b = b.size() - 1;
+	while (size_a >= 0 || size_b >= 0 || temp == 1) {
+		temp += ((size_a >= 0) ? a[size_a] - '0' : 0);
+		temp += ((size_b >= 0) ? b[size_b] - '0' : 0);
+		result = char(temp % 2 + '0') + result;
+		temp /= 2;
+		size_a--; size_b--;
+	}
+	return result;
+}
+
+void Hash::expand(std::deque<std::string> &block32)
+{
+	for (int i = 16; i < 64; i++) {
+		std::string a = xorString(block32[i - 2], block32[i - 7]); //    binaryAddition(xorString(block32[i - 2], block32[i - 7]), xorString(block32[i - 15], block32[i - 16]));
+		std::string b = xorString(block32[i - 15], block32[i - 16]);
+		std::rotate(b.begin(), b.begin() + 5, b.end());
+		b = xorString(a, b);
+		block32.push_back(b);
+	}
+}
+
 void Hash::compression(std::string bin)
 {
 	//std::vector<std::string> block512;
-	std::deque<std::string> block32; // 32bitai x 16. viso - 512.
+	std::deque<std::string> block32; // 32bitai x 16. viso - 512. Po to bus extendinama iki 32 x 64.
 	std::vector<std::string> hashBin; // 32bitai x 8. viso - 256.
+	std::vector<std::string> temporary;
+
 
 
 	// Viskas isdeliojama po 32 bitus i block32.
@@ -82,32 +133,54 @@ void Hash::compression(std::string bin)
 		t++;
 	}
 
+	expand(block32);
+
+	for (int i = 0; i < 64; i++) {
+		std::cout << i << ".  " << block32[i] << std::endl;
+	}
+
 	while (block32.size() != 0) {
 
-		//std::cout << "po pirmo maisymo: \n";
-		for (int i = 15; i > 0; i--) {
+		std::cout << "po pirmo maisymo: \n";
+		for (int i = 63; i > 0; i--) {
 			block32[i - 1] = xorString(block32[i - 1], block32[i]);
 			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
 		}
 
-		//std::cout << "po antro maisymo: \n";
-		for (int i = 1; i < 16; i++) {
-			std::rotate(block32[i].begin(), block32[i].begin() + i, block32[i].end());
+		std::cout << "po antro maisymo: \n";
+		for (int i = 1; i < 64; i++) {
+			std::rotate(block32[i].begin(), block32[i].begin() + 3, block32[i].end());
 			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
 		}
 
-		//std::cout << "po trecio maisymo: \n";
-		for (int i = 15; i > 0; i--) {
+		std::cout << "po trecio maisymo: \n";
+		for (int i = 63; i > 0; i--) {
 			block32[i - 1] = xorString(block32[i - 1], block32[i]);
 			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
 		}
 
-		//std::cout << "po ketvirto maisymo: \n";
-		for (int i = 0; i < 16; i += 2) {
+		std::cout << "po ketvirto maisymo, kompresavimo: \n";
+		for (int i = 0; i < 64; i += 2) {
 
-			hashBin.push_back(xorString(block32[i], block32[i + 1]));
+			temporary.push_back(xorString(block32[i], block32[i + 1]));
 			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
 		}
+
+		std::cout << "po penkto maisymo, kompresavimo: \n";
+		for (int i = 0; i < 32; i += 2) {
+
+			temporary.push_back(xorString(temporary[i], temporary[i + 1]));
+			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
+		}
+
+		std::cout << "po sesto maisymo, kompresavimo: \n";
+		for (int i = 32; i < 48; i += 2) {
+
+			hashBin.push_back(xorString(temporary[i], temporary[i + 1]));
+			//std::cout << "block[" << i << "] " << block32[i] << std::endl;
+		}
+
+		temporary.clear();
 
 
 		// TODO: butinai pakeist del avalanche efekto ir collisionu.
@@ -116,10 +189,12 @@ void Hash::compression(std::string bin)
 			test[i] = xorString(test[i], hashBin[i]);
 			//std::cout << "block[" << i << "] " << test[i] << std::endl;
 		}
-		hashBin.clear();
 
-		for (int i = 0; i < 16; i++) block32.pop_front();
-		//std::cout << "---------------Block32 size after iteration: " << block32.size() << std::endl;
+		hashBin.clear();
+		//block32.clear();
+
+		for (int i = 0; i < 64; i++) block32.pop_front();
+		std::cout << "---------------Block32 size after iteration: " << block32.size() << std::endl;
 	}
 
 	//std::cout << "compression ended" << std::endl;
