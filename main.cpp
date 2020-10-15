@@ -14,27 +14,28 @@ int main(int argc, char* argv[])
 	if (argc == 1) {
 		Hash hash;
 	}
-	else if (argc == 2) {
-		Hash hash(argv[1]);
+	else if (argc == 3 && (std::string(argv[1]) == "hash" || std::string(argv[1]) == "Hash")) {
+		Hash hash(1, argv[2]);
 	}
-	else if (argc == 3) {
+	else if (argc == 3 && (std::string(argv[1]) == "hashfile" || std::string(argv[1]) == "hashFile" || std::string(argv[1]) == "HashFile")) {
+		Hash hash(1, argv[2]);
+	}
+	else if (argc == 3 && std::string(argv[1]) == "time") {
+
 		std::cout << "Timer has started" << std::endl;
-
-		if (std::string(argv[1]) == "time") {
 			
-			std::string input;
-			std::vector<std::string> fullinput;
+		std::string input;
+		std::vector<std::string> fullinput;
 
-			std::ifstream file(argv[2]);
-			while (!file.eof()) {
-				std::getline(file, input);
-				fullinput.push_back(input);
-			}
+		std::ifstream file(argv[2]);
+		while (!file.eof()) {
+			std::getline(file, input);
+			fullinput.push_back(input);
+		}
 
-			Timer timer("Total time to hash the file:");
-			for (int i = 0; i < fullinput.size()-1; i++) {		
-				Hash hash(1, fullinput[i]);
-			}
+		Timer timer("Total time to hash the file:");
+		for (int i = 0; i < fullinput.size()-1; i++) {
+			Hash hash(1, fullinput[i]);
 		}
 	}
 	else
