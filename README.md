@@ -10,6 +10,9 @@
 7. Binary is onverted to hexadecimal and output is given.
 
 ## How to start the program
-0 arguments - console input.  
-1 argument - argument corresponds to the name of the file to read.  
-2 arguments - first argument needs to be "time", second the name of the file to read. Starting the prgoram this way, will count the time to hash a file.  
+|Action|Argument #1|Argument #2|
+|---|---|---|
+|Input string from console||| 
+|Input string from cli|hash|[your string]|
+|Input string from text file|hashfile|[your_file_name.txt]|
+|Count the time to hash a txt file|time|[your_file_name.txt]|
