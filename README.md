@@ -12,7 +12,7 @@
 ## How to start the program
 |Action|Argument #1|Argument #2|
 |---|---|---|
-|Input string from console||| 
+|Input string from console|[no argument]|[no argument]| 
 |Input string from cli|hash|[your string]|
 |Input string from text file|hashfile|[your_file_name.txt]|
 |Count the time to hash a txt file|time|[your_file_name.txt]|
