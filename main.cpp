@@ -14,13 +14,13 @@ int main(int argc, char* argv[])
 	if (argc == 1) {
 		Hash hash;
 	}
-	else if (argc == 3 && (std::string(argv[1]) == "hash" || std::string(argv[1]) == "Hash")) {
-		Hash hash(1, argv[2]);
+	else if (argc == 3 && std::string(argv[1]) == "hashfile") { //Hash a file
+		Hash hash(argv[2]);
 	}
-	else if (argc == 3 && (std::string(argv[1]) == "hashfile" || std::string(argv[1]) == "hashFile" || std::string(argv[1]) == "HashFile")) {
-		Hash hash(1, argv[2]);
+	else if (argc == 3 && std::string(argv[1]) == "hash") { //Hash a word
+		Hash hash("a", argv[2]);
 	}
-	else if (argc == 3 && std::string(argv[1]) == "time") {
+	else if (argc == 3 && std::string(argv[1]) == "hashtime") { //Time to has a file
 
 		std::cout << "Timer has started" << std::endl;
 			

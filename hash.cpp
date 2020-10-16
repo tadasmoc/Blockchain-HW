@@ -12,6 +12,13 @@ Hash::Hash(std::string fileName)
 	printToHex(binaryHash);
 }
 
+Hash::Hash(std::string x, std::string in)
+{
+	input = in;
+	std::cout << "Input: " << input << std::endl << std::endl;
+	padding(input);
+}
+
 Hash::Hash(int x, std::string in)
 {
 	input = in;
@@ -28,7 +35,7 @@ void Hash::hashReadConsole()
 {
 	std::cout << "Please type in your value:" << std::endl;
 	std::getline(std::cin, input);
-	std::cout << "Input: " << input << std::endl;
+	std::cout << "Input: " << input << std::endl << std::endl;
 
 	padding(input);
 }
@@ -37,7 +44,7 @@ void Hash::hashReadFile(std::string fileName)
 {
 	std::ifstream file(fileName);
 	std::getline(file, input);
-	std::cout << "input: " << input << std::endl;
+	std::cout << "Input: " << input << std::endl << std::endl;
 
 	padding(input);
 }

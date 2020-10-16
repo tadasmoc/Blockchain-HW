@@ -47,8 +47,11 @@ public:
 	// Constructor for hashig from file
 	Hash(std::string fileName);
 
+	// Constructor for hasing a word from cli
+	Hash(std::string x, std::string in);
+
 	// Constructor for timing hashes
-	Hash(int x, std::string input);
+	Hash(int x, std::string in);
 
 	// Destructor
 	~Hash();
