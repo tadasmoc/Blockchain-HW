@@ -9,6 +9,8 @@ int main(int argc, char* argv[])
 {	
 	std::cout << "Program has started\n" << std::endl;
 
+	std::ofstream fileReset("Output.txt");
+
 	//Hash hash;
 
 	if (argc == 1) {

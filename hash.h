@@ -32,14 +32,14 @@ private:
 	int asciiSize = 0;
 
 public:
-	std::string A = "01010010011000010111001101110000";
+	/*std::string A = "01010010011000010111001101110000";
 	std::string B = "01110101011101000110100101101110";
 	std::string C = "01001100011011110111011001100101";
 	std::string D = "01110010011011110110011001110100";
 	std::string E = "01101000011001010101001001110101";
 	std::string F = "01110011011100110110100101100001";
 	std::string G = "01101110011100010111010101100101";
-	std::string H = "01100101011011100010000100111111";
+	std::string H = "01100101011011100010000100111111";*/
 
 	// Default constructor
 	Hash();
@@ -60,8 +60,10 @@ public:
 	void hashReadFile(std::string fileName);
 	void padding(std::string& bin);
 	void compression(std::string bin);
-	void printToHex(std::vector<std::string> hashBin);
 	void expand(std::vector<std::string>& block32);
+	void printToHex(std::vector<std::string> hashBin);
+	void printToHexFile(std::vector<std::string> hashBin);
+
 
 	std::string toBinary(std::string text);
 	std::string xorString(std::string a, std::string b);

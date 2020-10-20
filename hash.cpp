@@ -23,6 +23,7 @@ Hash::Hash(int x, std::string in)
 {
 	input = in;
 	padding(input);
+	printToHexFile(binaryHash); // Prints hashes to file.
 }
 
 Hash::~Hash()
@@ -71,16 +72,17 @@ std::string Hash::binEnd()
 	}
 
 	for (int i = 0; i < input.size(); i++) {
-		result += std::to_string(int(input[i]) + asciiSize);
+		result += std::to_string(int(input[i]) * (i+1));
 		//std::cout << "result: " << result << std::endl;
 	}
+	result += std::to_string(asciiSize);
 
 	return toBinary(result);
 }
 
 void Hash::padding(std::string &bin)
 {
-	bin = toBinary(bin);
+	bin = toBinary(bin); // Initial input.
 	std::string BinEnd = binEnd(); // A string generated from the length of input and ASCII values. This will be added to the end of padded bin variable.
 	
 	int binEndSize = BinEnd.size();
@@ -124,26 +126,22 @@ void Hash::compression(std::string bin)
 	std::vector<std::string> temporary;
 
 	//Everything is split into 512bit blocks.
-	int t = 0;
 	while (bin.size() != 0) {
 		block512.push_back(bin.substr(bin.size() - 512, bin.size()));
-		for (int i = 0; i < 512; i++) bin.pop_back(); // potentialy slow.
+
+		bin.erase(bin.end() - 512, bin.end());
 
 		//std::cout << "block[" << t << "] " << block512[t] << std::endl;
 		//std::cout << "size: " << bin.size() << std::endl;
-
-		t++;
 	}
 
 	for (int z = 0; z < block512.size(); z++)
 	{
-
 		//From 512bit block to 32bit x 16 blocks
-		t = 0;
 		while (block512[z].size() != 0) {
 			block32.push_back(block512[z].substr(block512[z].size() - 32, block512[z].size()));
-			for (int i = 0; i < 32; i++) block512[z].pop_back(); // Potentialy slow.
-			t++;
+
+			block512[z].erase(block512[z].end()-32, block512[z].end());
 		}
 
 		//Expanding from 32bit x 16 blocks to 32bit x 64.
@@ -194,7 +192,7 @@ void Hash::compression(std::string bin)
 
 
 
-		// TODO: butinai pakeist del avalanche efekto ir collisionu.
+		// Paskutinis maisymas jau su galutiniu variable.
 		for (int i = 0; i < 8; i++) {
 			binaryHash[i] = xorString(binaryHash[i], block32[i]);
 		}
@@ -300,4 +298,92 @@ void Hash::printToHex(std::vector<std::string> binaryHash)
 		std::cout << rest;
 	}
 	std::cout << std::endl;
+}
+
+void Hash::printToHexFile(std::vector<std::string> binaryHash)
+{
+	std::ofstream output;
+	output.open("Output.txt", std::ofstream::app);
+	
+	for (int t = 0; t < 8; t++) {
+		std::string rest(""), tmp, chr = "";
+		int len = binaryHash[t].length() / 4;
+		chr = chr.substr(0, len);
+		binaryHash[t] = chr + binaryHash[t];
+		for (int i = 0; i < binaryHash[t].length(); i += 4)
+		{
+			tmp = binaryHash[t].substr(i, 4);
+			if (!tmp.compare("0000"))
+			{
+				rest = rest + "0";
+			}
+			else if (!tmp.compare("0001"))
+			{
+				rest = rest + "1";
+			}
+			else if (!tmp.compare("0010"))
+			{
+				rest = rest + "2";
+			}
+			else if (!tmp.compare("0011"))
+			{
+				rest = rest + "3";
+			}
+			else if (!tmp.compare("0100"))
+			{
+				rest = rest + "4";
+			}
+			else if (!tmp.compare("0101"))
+			{
+				rest = rest + "5";
+			}
+			else if (!tmp.compare("0110"))
+			{
+				rest = rest + "6";
+			}
+			else if (!tmp.compare("0111"))
+			{
+				rest = rest + "7";
+			}
+			else if (!tmp.compare("1000"))
+			{
+				rest = rest + "8";
+			}
+			else if (!tmp.compare("1001"))
+			{
+				rest = rest + "9";
+			}
+			else if (!tmp.compare("1010"))
+			{
+				rest = rest + "A";
+			}
+			else if (!tmp.compare("1011"))
+			{
+				rest = rest + "B";
+			}
+			else if (!tmp.compare("1100"))
+			{
+				rest = rest + "C";
+			}
+			else if (!tmp.compare("1101"))
+			{
+				rest = rest + "D";
+			}
+			else if (!tmp.compare("1110"))
+			{
+				rest = rest + "E";
+			}
+			else if (!tmp.compare("1111"))
+			{
+				rest = rest + "F";
+			}
+			else
+			{
+				continue;
+			}
+		}
+		output << rest;
+	}
+	output << std::endl;
+	output.close();
 }
