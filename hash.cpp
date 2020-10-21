@@ -6,24 +6,30 @@ Hash::Hash()
 	printToHex(binaryHash);
 }
 
-Hash::Hash(std::string fileName)
+Hash::Hash(std::string arg1, std::string arg2)
 {
-	hashReadFile(fileName);
+	if(arg1 == "hashfile") hashReadFile(arg2);
+	else {
+		input = arg2;
+		std::cout << "Input: " << input << std::endl << std::endl;
+		padding();
+	}
+
 	printToHex(binaryHash);
 }
 
-Hash::Hash(std::string x, std::string in)
+/*Hash::Hash(std::string& in, int& x)
 {
 	input = in;
 	std::cout << "Input: " << input << std::endl << std::endl;
-	padding(input);
-}
+	padding();
+}*/
 
-Hash::Hash(int x, std::string in)
+Hash::Hash(int& x, std::string& in)
 {
 	input = in;
-	padding(input);
-	printToHexFile(binaryHash); // Prints hashes to file.
+	padding();
+	//printToHexFile(binaryHash); // Prints hashes to file.
 }
 
 Hash::~Hash()
@@ -38,7 +44,7 @@ void Hash::hashReadConsole()
 	std::getline(std::cin, input);
 	std::cout << "Input: " << input << std::endl << std::endl;
 
-	padding(input);
+	padding();
 }
 
 void Hash::hashReadFile(std::string fileName)
@@ -47,7 +53,7 @@ void Hash::hashReadFile(std::string fileName)
 	std::getline(file, input);
 	std::cout << "Input: " << input << std::endl << std::endl;
 
-	padding(input);
+	padding();
 }
 
 std::string Hash::toBinary(std::string text)
@@ -66,6 +72,7 @@ std::string Hash::toBinary(std::string text)
 std::string Hash::binEnd()
 {
 	std::string result;
+	int asciiSize = 0;
 
 	for (int i = 0; i < input.size(); i++) {
 		asciiSize += int(input[i]);
@@ -80,24 +87,24 @@ std::string Hash::binEnd()
 	return toBinary(result);
 }
 
-void Hash::padding(std::string &bin)
+void Hash::padding()
 {
-	bin = toBinary(bin); // Initial input.
 	std::string BinEnd = binEnd(); // A string generated from the length of input and ASCII values. This will be added to the end of padded bin variable.
+	input = toBinary(input); // Initial input.
 	
 	int binEndSize = BinEnd.size();
-	if ((bin.size() + binEndSize) % 512 != 0) {
-		bin += "1";
+	if ((input.size() + binEndSize) % 512 != 0) {
+		input += "1";
 	}
 		
-	while ((bin.size() + binEndSize) % 512 != 0) {
-		bin += "0";
+	while ((input.size() + binEndSize) % 512 != 0) {
+		input += "0";
 	}
-	bin += BinEnd;
+	input += BinEnd;
 
-	//std::cout << "Padded: " << bin << std::endl;
+	//std::cout << "Padded: " << input << std::endl;
 
-	compression(bin);
+	compression();
 }
 
 std::string Hash::binaryAddition(std::string a, std::string b) //For future?
@@ -109,30 +116,22 @@ std::string Hash::binaryAddition(std::string a, std::string b) //For future?
 
 void Hash::expand(std::vector<std::string> &block32)
 {
-	//std::cout << "Expanding started, current size: " << block32.size() << std::endl;
 	for (int i = 16; i < 64; i++) {
-		std::string a = xorString(block32[i - 2], block32[i - 7]); //    binaryAddition(xorString(block32[i - 2], block32[i - 7]), xorString(block32[i - 15], block32[i - 16]));
-		std::string b = xorString(block32[i - 15], block32[i - 16]);
-		std::rotate(b.begin(), b.begin() + 5, b.end());
-		b = xorString(a, b);
-		block32.push_back(a);
+		block32.push_back(addBinary(addBinary(B(block32[i-5]), block32[i-2]), addBinary(A(block32[i-13]), block32[i-16])));
 	}
 }
 
-void Hash::compression(std::string bin)
+void Hash::compression()
 {
 	std::vector<std::string> block512;
 	std::vector<std::string> block32; // 32bit x 16. total - 512. Later extended to 32bit x 64 and then compressed to 32bit x 8.
 	std::vector<std::string> temporary;
 
 	//Everything is split into 512bit blocks.
-	while (bin.size() != 0) {
-		block512.push_back(bin.substr(bin.size() - 512, bin.size()));
+	while (input.size() != 0) {
+		block512.push_back(input.substr(input.size() - 512, input.size()));
 
-		bin.erase(bin.end() - 512, bin.end());
-
-		//std::cout << "block[" << t << "] " << block512[t] << std::endl;
-		//std::cout << "size: " << bin.size() << std::endl;
+		input.erase(input.end() - 512, input.end());
 	}
 
 	for (int z = 0; z < block512.size(); z++)
@@ -147,76 +146,45 @@ void Hash::compression(std::string bin)
 		//Expanding from 32bit x 16 blocks to 32bit x 64.
 		expand(block32);
 
-		//Pirmas maisymas
-		for (int i = 63; i > 0; i--) {
-			block32[i - 1] = xorString(block32[i - 1], block32[i]);
-		}
-		std::swap(block32[3], block32[60]);
-
-		//Antras maisymas
-		for (int i = 1; i < 64; i += 3) {
-			std::rotate(block32[i].begin(), block32[i].begin() + 5, block32[i].end());
-		}
-		std::swap(block32[10], block32[53]);
-
-
-		//Trecias maisymas
-		for (int i = 63; i > 0; i--) {
-			block32[i - 1] = xorString(block32[i - 1], block32[i]);
-		}
-		std::swap(block32[19], block32[44]);
-
-
-		//Ketvirtas maisymas + kompresavimas
+		//First shuffle + compression
 		for (int i = 0; i < 64; i += 2) {
 			temporary.push_back(xorString(block32[i], block32[i + 1]));
 		}
 		block32 = temporary;
 		temporary.clear();
 		std::swap(block32[5], block32[27]);
+		for (int i = 1; i < 9; i+=2) {
+			addBinary(D(block32[i * 3]), binaryHash[i-1]);
+		}
 
-		//Penktas maisymas + kompresavimas
+		//Second shuffle + compression
 		for (int i = 0; i < 32; i += 2) {
 			temporary.push_back(xorString(block32[i], block32[i + 1]));
 		}
 		block32 = temporary;
 		temporary.clear();
+		for (int i = 0; i < 8; i+= 2) {
+			xorString(C(block32[i*2]), binaryHash[i]);
+		}
 
-
-		//Sestas maisymas + kompresavimas
+		//Third shuffle + compression
 		for (int i = 0; i < 16; i += 2) {
 			temporary.push_back(xorString(block32[i], block32[i + 1]));
 		}
 		block32 = temporary;
 		temporary.clear();
 
-
-
-		// Paskutinis maisymas jau su galutiniu variable.
+		//Fourth shuffle
 		for (int i = 0; i < 8; i++) {
-			binaryHash[i] = xorString(binaryHash[i], block32[i]);
+			binaryHash[i] = xorString(binaryHash[i], B(block32[i]));
 		}
+		std::swap(binaryHash[0], binaryHash[7]);
 
 		block32.clear();
 	}
 }
 
-std::string Hash::xorString(std::string a, std::string b)
-{
-	std::string ans;
-
-	for (int i = 0; i < a.size(); i++)
-	{
-		// If the Character matches 
-		if (a[i] == b[i])
-			ans += "0";
-		else
-			ans += "1";
-	}
-	return ans;
-}
-
-void Hash::printToHex(std::vector<std::string> binaryHash)
+void Hash::printToHex(std::vector<std::string>& binaryHash)
 {
 	for (int t = 0; t < 8; t++) {
 		std::string rest(""), tmp, chr = "";
@@ -300,7 +268,7 @@ void Hash::printToHex(std::vector<std::string> binaryHash)
 	std::cout << std::endl;
 }
 
-void Hash::printToHexFile(std::vector<std::string> binaryHash)
+void Hash::printToHexFile(std::vector<std::string>& binaryHash)
 {
 	std::ofstream output;
 	output.open("Output.txt", std::ofstream::app);
@@ -386,4 +354,111 @@ void Hash::printToHexFile(std::vector<std::string> binaryHash)
 	}
 	output << std::endl;
 	output.close();
+}
+
+// Shuffle functions
+
+std::string Hash::xorString(std::string a, std::string b)
+{
+	std::string ans;
+
+	for (int i = 0; i < a.size(); i++)
+	{
+		// If the Character matches 
+		if (a[i] == b[i])
+			ans += "0";
+		else
+			ans += "1";
+	}
+	return ans;
+}
+
+std::string Hash::addBinary(std::string a, std::string b)
+{
+	std::string s = "";
+	int c = 0, i = a.size() - 1, j = b.size() - 1;
+	while (i >= 0 || j >= 0 || c == 1)
+	{
+		c += i >= 0 ? a[i--] - '0' : 0;
+		c += j >= 0 ? b[j--] - '0' : 0;
+		s = char(c % 2 + '0') + s;
+		c /= 2;
+	}
+
+	while (s.size() != 32) {
+		s.pop_back();
+	}
+
+	return s;
+}
+
+std::string Hash::lshift(std::string a, int n)
+{
+	for (int i = 1; i <= n; i++) {
+		for (int t = 0; t < a.size() - 1; t++) {
+			a[t] = a[t + 1];
+		}
+		a[a.size() - i] = '0';
+	}
+	return a;
+}
+
+std::string Hash::A(std::string a)
+{
+	std::string b = a;
+	std::string c = a;
+
+	std::rotate(a.begin(), a.begin() + 3, a.end());
+	std::rotate(b.begin(), b.begin() + 7, b.end());
+
+	a = xorString(a, b);
+	c = lshift(c, 10);
+	a = xorString(a, c);
+
+	return a;
+}
+
+std::string Hash::B(std::string a)
+{
+	std::string b = a;
+	std::string c = a;
+
+	std::rotate(a.begin(), a.begin() + 19, a.end());
+	std::rotate(b.begin(), b.begin() + 13, b.end());
+
+	a = xorString(a, b);
+	c = lshift(c, 3);
+	a = xorString(a, c);
+
+	return a;
+}
+
+std::string Hash::C(std::string a)
+{
+	std::string b = a;
+	std::string c = a;
+
+	std::rotate(a.begin(), a.begin() + 10, a.end());
+	std::rotate(b.begin(), b.begin() + 18, b.end());
+	std::rotate(c.begin(), c.begin() + 2, c.end());
+
+	b = xorString(a, b);
+	a = xorString(b, c);
+
+	return a;
+}
+
+std::string Hash::D(std::string a)
+{
+	std::string b = a;
+	std::string c = a;
+
+	std::rotate(a.begin(), a.begin() + 3, a.end());
+	std::rotate(b.begin(), b.begin() + 18, b.end());
+	std::rotate(c.begin(), c.begin() + 12, c.end());
+
+	b = xorString(a, b);
+	a = xorString(b, c);
+
+	return a;
 }

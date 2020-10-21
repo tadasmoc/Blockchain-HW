@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {	
-	std::cout << "Program has started\n" << std::endl;
+	std::cout << "Program has started.\n" << std::endl;
 
 	std::ofstream fileReset("Output.txt");
 
@@ -16,15 +16,9 @@ int main(int argc, char* argv[])
 	if (argc == 1) {
 		Hash hash;
 	}
-	else if (argc == 3 && std::string(argv[1]) == "hashfile") { //Hash a file
-		Hash hash(argv[2]);
-	}
-	else if (argc == 3 && std::string(argv[1]) == "hash") { //Hash a word
-		Hash hash("a", argv[2]);
-	}
 	else if (argc == 3 && std::string(argv[1]) == "hashtime") { //Time to has a file
 
-		std::cout << "Timer has started" << std::endl;
+		std::cout << "Reading file..." << std::endl;
 			
 		std::string input;
 		std::vector<std::string> fullinput;
@@ -35,10 +29,14 @@ int main(int argc, char* argv[])
 			fullinput.push_back(input);
 		}
 
-		Timer timer("Total time to hash the file:");
+		std::cout << "Hashing..." << std::endl;
+		Timer timer("Total time to hash the file (read time not included):");
 		for (int i = 0; i < fullinput.size()-1; i++) {
-			Hash hash(1, fullinput[i]);
+			Hash hash(i, fullinput[i]);
 		}
+	}
+	else if (argc == 3) { //Hash a file or a word.
+		Hash hash(argv[1], argv[2]);
 	}
 	else
 	{
