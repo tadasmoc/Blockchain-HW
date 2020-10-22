@@ -1,4 +1,4 @@
-# Blockchain-HW
+# Blockchain Home Works - Hash function
 
 ## How the program works
 1. Program starts and reads a string either form console or from a .txt file.
@@ -12,26 +12,37 @@
 ## How to start the program
 |Action|Argument #1|Argument #2|
 |---|---|---|
-|Input string from console|[no argument]|[no argument]| 
-|Input string from cli|hash|[your string]|
-|Input string from text file|hashfile|`[your_file_name.txt]`|
-|Count the time to hash a txt file|time|`[your_file_name.txt]`|
+|Input string from console|`[no argument]`|`[no argument]`| 
+|Input string from cli|`hashstring` / `hashword`|`[your string]`|
+|Input string from text file|`hashfile`|`[your_file_name.txt]`|
+|Count the time to hash a txt file|`hashtime`|`[your_file_name.txt]`|
 
 ## Analysis
-### 1. Created the required files.
+Ananlysis and its numbering dirrectly corresponds the task given ("Komentarai dėl eksperimentinio tyrimo-analizės atlikimo").
+### 1. - Created the required files.
 
-### 2. After hashing the files, got these results
+### 2. - After hashing the files, got these results
 |File name|Result|
 |---|---|
-|1charA|1E8D149A03F4696E4C6F766504EF667468655275A373696FBE71756B2CD11100|
-|1charB|A621749F37F4696E4C6F766530EF667468655275237369693E71756D14DC120C|
-|1001charA|3FD021FD500C3B4AB4AA4362E26A183F6599084684EB2E90E4C8508CD6FA8F50|
-|1001charB|868A92CE27462076B29BBE17CE9CDFAD6F6D26DE24B6282F7DA06F4EF3424EE0|
-|similar1001charA|2D8B41E372735239406695F0829EE9AA7B51B4502DFDEC7169C78218996BA697|
-|similar1001charB|E34540265D72523741A8941FAC5EE9AA7AB1B450CDFDED9A89C983F2B7A5A6B6|
-|empty|526173707574696E4C6F7665726F667468655275737369616E717565656E213F|
+|1charA.txt|4C025E224FB6B8DBF02EA2EE735865C65EAB1201FD9E5656DF668F37B3A195B6|
+|1charB.txt|F1315484AF6C08DE3CB849556C3826FBFF3C1EBB890622B83F06D61694A7B5B7|
+|1001charA.txt|0B40C3A9639B610D472CF802C95B31355522F58CFF9CB74F658D26F3DAA1BFAB|
+|1001charB.txt|B7257D9A3306F14A6869AE1223626367C1BCAAF35201AE910EC373E4D1273C2F|
+|similar1001charA.txt|13326D53DDE7A6FBDAE632064A675DA4EE52AD1AC23F545E138BFB1108A07401|
+|similar1001charB.txt|23FF830C6684FE71986006F24DA06D091709960250413D227241DAE22818B439|
+|empty.txt|3FF2DCDF285A54690A0EF60421AFF883DC1E9D8D8BF11C0EF9FFFCD853E772F0|
 
-Conclusion: The hash function accepsts any size strings. Independently from the input, output stays the same size - 64 symbols long hexadecimal string. If we try to hash the same string again, we will get the same output value. Hence, the function meets the 1-3 requirements.
+Conclusion: The hash function accepts any size strings. Independently from the input, output stays the same size - 64 symbols long hexadecimal string. If we try to hash the same string again, we will get the same output value. Hence, the function meets the 1-3 requirements.
 
-### 3. Hashing big files
-To hash the file `konstitucija.txt` function needed 12.9274s. The time is not ideal, and there is lots of room for improvements.
+### 3. - Hashing big files
+Total time to hash the file `"konstitucija.txt"` (read time not included): 4.30591s. The time to hash has been improved since the previuos versions, but there is still room for improvements.
+
+### 4.& 5. - Collisions
+The task is to hash 100k lines of random strings and then check the for collisions. However, the hash function is quite slow, thus, the test is only carried out with 50k (file: `"50000.txt"`) lines of random strings: 12.5k lines of 10 char strings, 12.5k lines of 100 char strings, 12.5k lines of 500 char strings, 12.5k lines of 1000 char strings. In total hash function needed 34 minutes to hash the whole file (including the output time). The results are in `"50k strings hashed.txt"` file. No collisions were detected. To conclude, the function proves to be reliable in terms of collisions.
+
+### 6. - Statistics of difference
+15k of similar string lines were used (file: `"similar15k.txt"`). There are two outputs of the file: `"15k output hex.txt"` - hexadecimal hashes, `"15k output bin.txt"` - binary hashes. The whole hexadecimal output has been checked for matching hashes and none were found.
+#### Percentage of difference in hexadecimal output
+91.8671%
+#### Percentage of difference in binary output
+48.2558%

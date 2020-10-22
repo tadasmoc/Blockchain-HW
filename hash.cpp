@@ -22,7 +22,8 @@ Hash::Hash(int& x, std::string& in)
 {
 	input = in;
 	padding();
-	printToHexFile(binaryHash); // Prints hashes to file.
+	//printBinary(binaryHash);
+	//printToHexFile(binaryHash); // Prints hashes to file.
 }
 
 Hash::~Hash()
@@ -169,6 +170,8 @@ void Hash::compression()
 		block32.clear();
 	}
 }
+
+// Print functions
 
 void Hash::printToHex(std::vector<std::string>& binaryHash)
 {
@@ -338,6 +341,17 @@ void Hash::printToHexFile(std::vector<std::string>& binaryHash)
 		}
 		output << rest;
 	}
+	output << std::endl;
+	output.close();
+}
+
+void Hash::printBinary(std::vector<std::string>& hashBin)
+{
+	std::ofstream output;
+	output.open("OutputBin.txt", std::ofstream::app);
+	
+	for (int i = 0; i < 8; i++) output << hashBin[i];
+
 	output << std::endl;
 	output.close();
 }

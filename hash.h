@@ -52,6 +52,7 @@ public:
 	void expand(std::vector<std::string>& block32);
 	void printToHex(std::vector<std::string>& hashBin);
 	void printToHexFile(std::vector<std::string>& hashBin);
+	void printBinary(std::vector<std::string>& hashBin);
 
 	std::string toBinary(std::string text);
 	std::string binEnd();
