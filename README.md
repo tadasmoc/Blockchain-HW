@@ -1,4 +1,4 @@
-# Blockchain-HW
+# Blockchain Home Works - Hash function
 
 ## How the program works
 1. Program starts and reads a string either form console or from a .txt file.
@@ -43,4 +43,6 @@ The task is to hash 100k lines of random strings and then check the for collisio
 ### 6. - Statistics of difference
 15k of similar string lines were used (file: `"similar15k.txt"`). There are two outputs of the file: `"15k output hex.txt"` - hexadecimal hashes, `"15k output bin.txt"` - binary hashes. The whole hexadecimal output has been checked for matching hashes and none were found.
 #### Percentage of difference in hexadecimal output
+91.8671
 #### Percentage of difference in binary output
+48.2558
