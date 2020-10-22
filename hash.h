@@ -54,7 +54,6 @@ public:
 	void printToHexFile(std::vector<std::string>& hashBin);
 
 	std::string toBinary(std::string text);
-	std::string binaryAddition(std::string a, std::string b);
 	std::string binEnd();
 
 	// Shuffle functions

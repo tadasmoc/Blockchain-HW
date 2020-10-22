@@ -32,6 +32,9 @@ int main(int argc, char* argv[])
 		std::cout << "Hashing..." << std::endl;
 		Timer timer("Total time to hash the file (read time not included):");
 		for (int i = 0; i < fullinput.size()-1; i++) {
+			if (i == 5000) {
+				std::cout << "5k pasiekta" << std::endl; break;
+			}
 			Hash hash(i, fullinput[i]);
 		}
 	}

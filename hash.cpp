@@ -18,18 +18,11 @@ Hash::Hash(std::string arg1, std::string arg2)
 	printToHex(binaryHash);
 }
 
-/*Hash::Hash(std::string& in, int& x)
-{
-	input = in;
-	std::cout << "Input: " << input << std::endl << std::endl;
-	padding();
-}*/
-
 Hash::Hash(int& x, std::string& in)
 {
 	input = in;
 	padding();
-	//printToHexFile(binaryHash); // Prints hashes to file.
+	printToHexFile(binaryHash); // Prints hashes to file.
 }
 
 Hash::~Hash()
@@ -105,13 +98,6 @@ void Hash::padding()
 	//std::cout << "Padded: " << input << std::endl;
 
 	compression();
-}
-
-std::string Hash::binaryAddition(std::string a, std::string b) //For future?
-{
-	std::string result = "";
-	
-	return result;
 }
 
 void Hash::expand(std::vector<std::string> &block32)
@@ -402,17 +388,15 @@ std::string Hash::lshift(std::string a, int n)
 	}
 	return a;
 }
-
 std::string Hash::A(std::string a)
 {
-	std::string b = a;
-	std::string c = a;
+	std::string c = lshift(a, 10);
 
 	std::rotate(a.begin(), a.begin() + 3, a.end());
-	std::rotate(b.begin(), b.begin() + 7, b.end());
+	std::string b = a;
+	std::rotate(b.begin(), b.begin() + 4, b.end());
 
 	a = xorString(a, b);
-	c = lshift(c, 10);
 	a = xorString(a, c);
 
 	return a;
@@ -420,14 +404,13 @@ std::string Hash::A(std::string a)
 
 std::string Hash::B(std::string a)
 {
-	std::string b = a;
-	std::string c = a;
+	std::string c = lshift(a, 3);
 
-	std::rotate(a.begin(), a.begin() + 19, a.end());
-	std::rotate(b.begin(), b.begin() + 13, b.end());
+	std::rotate(a.begin(), a.begin() + 13, a.end());
+	std::string b = a;
+	std::rotate(b.begin(), b.begin() + 6, b.end());
 
 	a = xorString(a, b);
-	c = lshift(c, 3);
 	a = xorString(a, c);
 
 	return a;
@@ -435,30 +418,28 @@ std::string Hash::B(std::string a)
 
 std::string Hash::C(std::string a)
 {
+	/*std::rotate(a.begin(), a.begin() + 2, a.end());
 	std::string b = a;
-	std::string c = a;
-
-	std::rotate(a.begin(), a.begin() + 10, a.end());
-	std::rotate(b.begin(), b.begin() + 18, b.end());
-	std::rotate(c.begin(), c.begin() + 2, c.end());
+	std::rotate(b.begin(), b.begin() + 8, b.end());
+	std::string c = b;
+	std::rotate(c.begin(), c.begin() + 8, c.end());
 
 	b = xorString(a, b);
-	a = xorString(b, c);
+	a = xorString(b, c);*/
 
 	return a;
 }
 
 std::string Hash::D(std::string a)
-{
+{	
+	/*std::rotate(a.begin(), a.begin() + 3, a.end());
 	std::string b = a;
-	std::string c = a;
-
-	std::rotate(a.begin(), a.begin() + 3, a.end());
-	std::rotate(b.begin(), b.begin() + 18, b.end());
-	std::rotate(c.begin(), c.begin() + 12, c.end());
+	std::rotate(b.begin(), b.begin() + 9, b.end());
+	std::string c = b;
+	std::rotate(c.begin(), c.begin() + 6, c.end());
 
 	b = xorString(a, b);
-	a = xorString(b, c);
+	a = xorString(b, c);*/
 
 	return a;
 }

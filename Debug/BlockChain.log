@@ -1,15 +1,4 @@
-﻿  hash.cpp
+﻿  main.cpp
   The contents of <bit> are available only with C++20 or later.
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(131,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(188,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(275,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(359,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(392,21): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-  The contents of <bit> are available only with C++20 or later.
-C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(24,24): error C2664: 'Hash::Hash(const Hash &)': cannot convert argument 1 from 'char *' to 'std::string &'
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.h(40,2): message : see declaration of 'Hash::Hash'
-C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(41,21): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(34,21): warning C4018: '<': signed/unsigned mismatch
+  BlockChain.vcxproj -> C:\Users\tadas\Desktop\BlockChain\Debug\BlockChain.exe
