@@ -47,5 +47,5 @@ The task is to hash 100k lines of random strings and then check the for collisio
 #### Percentage of difference in binary output
 48.2558%
 
-### 3. - Conclusion
+### 7. - Conclusion
 The hash function proves to be quite reliable in two ways: avalanche effect - changing one symbol in the string, changes the output almost 92% on average; collisions - after hashing a file with 50k lines of different strings, no collisions were detected. However, the function has one significant weakness - speed. It is really slow compared to other widely used hash functions, such as SHA256.
