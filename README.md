@@ -32,7 +32,7 @@ Ananlysis and its numbering dirrectly corresponds the task given ("Komentarai dÄ
 |similar1001charB.txt|23FF830C6684FE71986006F24DA06D091709960250413D227241DAE22818B439|
 |empty.txt|3FF2DCDF285A54690A0EF60421AFF883DC1E9D8D8BF11C0EF9FFFCD853E772F0|
 
-Conclusion: The hash function accepts any size strings. Independently from the input, output stays the same size - 64 symbols long hexadecimal string. If we try to hash the same string again, we will get the same output value. Hence, the function meets the 1-3 requirements.
+The hash function accepts any size strings. Independently from the input, output stays the same size - 64 symbols long hexadecimal string. If we try to hash the same string again, we will get the same output value. Hence, the function meets the 1-3 requirements.
 
 ### 3. - Hashing big files
 Total time to hash the file `"konstitucija.txt"` (read time not included): 4.30591s. The time to hash has been improved since the previuos versions, but there is still room for improvements.
@@ -46,3 +46,6 @@ The task is to hash 100k lines of random strings and then check the for collisio
 91.8671%
 #### Percentage of difference in binary output
 48.2558%
+
+### 3. - Conclusion
+The hash function proves to be quite reliable in two ways: avalanche effect - changing one symbol in the string, changes the output almost 92% on average; collisions - after hashing a file with 50k lines of different strings, no collisions were detected. However, the function has one significant weakness - speed. It is really slow compared to other widely used hash functions, such as SHA256.
