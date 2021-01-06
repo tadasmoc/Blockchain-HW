@@ -1,7 +1,10 @@
 ﻿  blockchain.cpp
-C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(65,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  The contents of <bit> are available only with C++20 or later.
+  generator.cpp
+  The contents of <bit> are available only with C++20 or later.
+C:\Users\tadas\Desktop\BlockChain\BlockChain\generator.cpp(20,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   main.cpp
   The contents of <bit> are available only with C++20 or later.
-C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(34,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(35,21): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   BlockChain.vcxproj -> C:\Users\tadas\Desktop\BlockChain\Debug\BlockChain.exe

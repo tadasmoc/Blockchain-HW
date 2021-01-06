@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="blockchain.cpp" />
+    <ClCompile Include="generator.cpp" />
     <ClCompile Include="hash.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blockchain.h" />
+    <ClInclude Include="generator.h" />
     <ClInclude Include="hash.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="user.h" />

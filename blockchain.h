@@ -4,10 +4,7 @@
 #include <chrono>
 #include <vector>
 #include "user.h"
-
-// For random name generation
-#include <cstdlib>
-#include <ctime>
+#include "hash.h"
 
 
 class Block {
@@ -66,10 +63,9 @@ public:
 	// Destructor
 	~Transaction();
 
-};
-
-class Generator {
-public:
-	std::string randName();
-	void generateUsers(std::vector<User>&, int);
+	// Set functions
+	void setTransaction_id(std::string);
+	void setSender_key(std::string);
+	void setReceiver_key(std::string);
+	void setSum(int);
 };

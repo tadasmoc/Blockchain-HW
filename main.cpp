@@ -6,9 +6,10 @@
 #include "timer.h"
 #include "user.h"
 #include "blockchain.h"
+#include "generator.h"
 
 int main(int argc, char* argv[])
-{	
+{
 	std::cout << "Program has started.\n" << std::endl;
 
 	std::ofstream fileReset("Output.txt");
@@ -19,7 +20,7 @@ int main(int argc, char* argv[])
 	else if (argc == 3 && std::string(argv[1]) == "hashtime") { //Time to has a file
 
 		std::cout << "Reading file..." << std::endl;
-			
+
 		std::string input;
 		std::vector<std::string> fullinput;
 
@@ -31,8 +32,8 @@ int main(int argc, char* argv[])
 
 		std::cout << "Hashing..." << std::endl;
 		Timer timer("Total time to hash the file (read time not included):");
-		for (int i = 0; i < fullinput.size()-1; i++) {
-			
+		for (int i = 0; i < fullinput.size() - 1; i++) {
+
 			Hash hash(i, fullinput[i]);
 		}
 	}
@@ -59,12 +60,22 @@ int main(int argc, char* argv[])
 	Hash hash;
 	std::cout << std::endl << "\nTiesiai is klases: " << std::endl << hash.toHash("labadiena") << std::endl << hash.toHash("labasvakaras");
 
-	std::vector<User> users;
 	Generator generator;
-	generator.generateUsers(users, 10);
+	std::vector<User> users;
+	std::vector<Transaction> transactions;
+	
+	// Useriu generacija
 
-	for (int i = 0; i < 10; i++) users[i].printUser();
+	std::cout << "\n\nGenerating users..." << std::endl;
+	generator.generateUsers(users, 100);
+	for (int i = 0; i < 100; i++) users[i].printUser();
+	std::cout << "User generation has been completed" << std::endl;
 
+
+	std::cout << "\n\nGenerating transactions..." << std::endl;
+	generator.generateTransactions(transactions, users, 100);
+	//for (int i = 0; i < 100; i++) users[i].printUser();
+	std::cout << "Transaction generation has been completed" << std::endl;
 
 
 	return 0;
