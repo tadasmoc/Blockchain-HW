@@ -4,14 +4,14 @@
 #include <vector>
 #include "hash.h"
 #include "timer.h"
+#include "user.h"
+#include "blockchain.h"
 
 int main(int argc, char* argv[])
 {	
 	std::cout << "Program has started.\n" << std::endl;
 
 	std::ofstream fileReset("Output.txt");
-
-	//Hash hash;
 
 	if (argc == 1) {
 		Hash hash;
@@ -43,6 +43,29 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "Invalid argument number" << std::endl;
 	}
+
+	/*User user("Tadas", "123", 12);
+	std::cout << "Name: " << user.getName();
+	std::cout << "public key: " << user.getPublic_key();
+	std::cout << "Balance: " << user.getBalance();*/
+
+
+
+
+
+
+
+	std::cout << "Testaaaasss: " << std::endl;
+	Hash hash;
+	std::cout << std::endl << "\nTiesiai is klases: " << std::endl << hash.toHash("labadiena") << std::endl << hash.toHash("labasvakaras");
+
+	std::vector<User> users;
+	Generator generator;
+	generator.generateUsers(users, 10);
+
+	for (int i = 0; i < 10; i++) users[i].printUser();
+
+
 
 	return 0;
 }

@@ -2,9 +2,24 @@
 
 Hash::Hash()
 {
-	hashReadConsole();
-	printToHex(binaryHash);
+	// Situs ijungti, norint iskart inicijuot skaityma is konsoles.
+	// Ijungus neveiks toHash() funkcija.
+	
+	//hashReadConsole();
+	//printToHex(binaryHash);
 }
+
+std::string Hash::toHash(std::string in)
+{
+	input = in;
+	hashedVal = "";
+	binaryHash = binaryHashSeed;
+	padding();
+	toHex(binaryHash);
+
+	return hashedVal;
+}
+
 
 Hash::Hash(std::string arg1, std::string arg2)
 {
@@ -29,6 +44,11 @@ Hash::Hash(int& x, std::string& in)
 Hash::~Hash()
 {
 	//std::cout << "\nDESTRUCTED\n\n";
+}
+
+std::string Hash::getHashedVal()
+{
+	return hashedVal;
 }
 
 
@@ -172,6 +192,89 @@ void Hash::compression()
 }
 
 // Print functions
+
+void Hash::toHex(std::vector<std::string>& binaryHash)
+{
+	for (int t = 0; t < 8; t++) {
+		std::string rest(""), tmp, chr = "";
+		int len = binaryHash[t].length() / 4;
+		chr = chr.substr(0, len);
+		binaryHash[t] = chr + binaryHash[t];
+		for (int i = 0; i < binaryHash[t].length(); i += 4)
+		{
+			tmp = binaryHash[t].substr(i, 4);
+			if (!tmp.compare("0000"))
+			{
+				rest = rest + "0";
+			}
+			else if (!tmp.compare("0001"))
+			{
+				rest = rest + "1";
+			}
+			else if (!tmp.compare("0010"))
+			{
+				rest = rest + "2";
+			}
+			else if (!tmp.compare("0011"))
+			{
+				rest = rest + "3";
+			}
+			else if (!tmp.compare("0100"))
+			{
+				rest = rest + "4";
+			}
+			else if (!tmp.compare("0101"))
+			{
+				rest = rest + "5";
+			}
+			else if (!tmp.compare("0110"))
+			{
+				rest = rest + "6";
+			}
+			else if (!tmp.compare("0111"))
+			{
+				rest = rest + "7";
+			}
+			else if (!tmp.compare("1000"))
+			{
+				rest = rest + "8";
+			}
+			else if (!tmp.compare("1001"))
+			{
+				rest = rest + "9";
+			}
+			else if (!tmp.compare("1010"))
+			{
+				rest = rest + "A";
+			}
+			else if (!tmp.compare("1011"))
+			{
+				rest = rest + "B";
+			}
+			else if (!tmp.compare("1100"))
+			{
+				rest = rest + "C";
+			}
+			else if (!tmp.compare("1101"))
+			{
+				rest = rest + "D";
+			}
+			else if (!tmp.compare("1110"))
+			{
+				rest = rest + "E";
+			}
+			else if (!tmp.compare("1111"))
+			{
+				rest = rest + "F";
+			}
+			else
+			{
+				continue;
+			}
+		}
+		hashedVal += rest;
+	}
+}
 
 void Hash::printToHex(std::vector<std::string>& binaryHash)
 {

@@ -1,10 +1,7 @@
-﻿  hash.cpp
+﻿  blockchain.cpp
+C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(65,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
   The contents of <bit> are available only with C++20 or later.
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(75,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(124,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(183,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(270,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(365,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\tadas\Desktop\BlockChain\BlockChain\hash.cpp(398,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(34,21): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   BlockChain.vcxproj -> C:\Users\tadas\Desktop\BlockChain\Debug\BlockChain.exe

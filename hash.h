@@ -17,7 +17,8 @@ class Hash
 {
 private:
 	std::string input;
-	std::vector<std::string> binaryHash =
+	std::string hashedVal;
+	std::vector<std::string> binaryHashSeed =
 	{
 		"01010010011000010111001101110000",
 		"01110101011101000110100101101110",
@@ -28,15 +29,19 @@ private:
 		"01101110011100010111010101100101",
 		"01100101011011100010000100111111"
 	};
+	std::vector<std::string> binaryHash = binaryHashSeed;
 
 public:
 	// Default constructor
 	Hash();
 
+	// Constructor to just return hashed value
+	//Hash(std::string);
+
 	// Constructor for hashing from file
 	Hash(std::string arg1, std::string arg2);
 
-	// Constructor for hasing a word from cli
+	// Constructor for hashing a word from cli
 	//Hash(std::string& in, int& x);
 
 	// Constructor for timing hashes
@@ -45,11 +50,18 @@ public:
 	// Destructor
 	~Hash();
 
+	// Return type function for hashing strings.
+	std::string toHash(std::string);
+
+	// Hashed value getter
+	std::string getHashedVal();
+
 	void hashReadConsole();
 	void hashReadFile(std::string fileName);
 	void padding();
 	void compression();
 	void expand(std::vector<std::string>& block32);
+	void toHex(std::vector<std::string>& hashBin);
 	void printToHex(std::vector<std::string>& hashBin);
 	void printToHexFile(std::vector<std::string>& hashBin);
 	void printBinary(std::vector<std::string>& hashBin);
