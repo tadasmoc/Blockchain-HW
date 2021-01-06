@@ -47,7 +47,7 @@ void Generator::generateTransactions(std::vector<Transaction>& transactions, std
 
 
 
-		transaction.setTransaction_id(hashRand.toHash((Transaction_id + Sender_key + Receiver_key) + std::to_string(Sum)));
+		//transaction.setTransaction_id(hashRand.toHash((Transaction_id + Sender_key + Receiver_key) + std::to_string(Sum)));
 		transactions.push_back(transaction);
 	}
 }
