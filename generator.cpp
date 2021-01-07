@@ -14,7 +14,7 @@ std::string Generator::randName()
 
 void Generator::generateUsers(std::vector<User>& users, int n)
 {
-	Timer timer("User generation:");
+	Timer timer("User generation took:");
 
 	Hash hashRand;
 	User user;
@@ -30,7 +30,7 @@ void Generator::generateUsers(std::vector<User>& users, int n)
 
 void Generator::generateTransactions(std::vector<Transaction>& transactions, std::vector<User>& users, int n)
 {
-	Timer timer("Transaction generation:");
+	Timer timer("Transaction generation took:");
 
 	Hash hashRand;
 	Transaction transaction;

@@ -362,6 +362,9 @@ void Hash::printToHex(std::vector<std::string>& binaryHash)
 
 void Hash::printToHexFile(std::vector<std::string>& binaryHash)
 {
+	std::ofstream fileReset("Output.txt");
+	fileReset.close();
+
 	std::ofstream output;
 	output.open("Output.txt", std::ofstream::app);
 	
@@ -450,6 +453,9 @@ void Hash::printToHexFile(std::vector<std::string>& binaryHash)
 
 void Hash::printBinary(std::vector<std::string>& hashBin)
 {
+	std::ofstream fileReset("Output.txt");
+	fileReset.close();
+	
 	std::ofstream output;
 	output.open("OutputBin.txt", std::ofstream::app);
 	

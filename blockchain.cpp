@@ -37,10 +37,10 @@ void Block::printBlock()
 	std::cout << "version:     " << version << std::endl;
 	std::cout << "nonce:       " << nonce << std::endl;
 	std::cout << "difficulty:  " << difficulty << std::endl;
-	std::cout << "--Block transactions--" << std::endl;
+	std::cout << "\n-Block-transactions-" << std::endl;
 
 	for (int i = 0; i < Btransactions.size(); i++) {
-		std::cout << i << ". ";
+		std::cout << i << "\n";
 		Btransactions[i].printTransaction();
 	}
 }
