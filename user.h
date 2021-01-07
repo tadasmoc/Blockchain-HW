@@ -29,5 +29,8 @@ public:
 	void setBalance(int);
 
 	void printUser();
+	void reduceBalance(int);
+	void increaseBalance(int);
+
 
 };

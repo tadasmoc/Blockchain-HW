@@ -1,5 +1,21 @@
-﻿  generator.cpp
+﻿  blockchain.cpp
   The contents of <bit> are available only with C++20 or later.
-C:\Users\tadas\Desktop\BlockChain\BlockChain\generator.cpp(20,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\tadas\Desktop\BlockChain\BlockChain\generator.cpp(43,6): warning C4101: 'Sum': unreferenced local variable
+C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(14,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(16,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(23,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\blockchain.cpp(42,20): warning C4018: '<': signed/unsigned mismatch
+  generator.cpp
+  The contents of <bit> are available only with C++20 or later.
+C:\Users\tadas\Desktop\BlockChain\BlockChain\generator.cpp(22,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tadas\Desktop\BlockChain\BlockChain\generator.cpp(38,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
+  The contents of <bit> are available only with C++20 or later.
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(40,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(64,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(71,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(104,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(135,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(149,14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\tadas\Desktop\BlockChain\BlockChain\main.cpp(184,20): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   BlockChain.vcxproj -> C:\Users\tadas\Desktop\BlockChain\Debug\BlockChain.exe

@@ -1,4 +1,7 @@
 #include "generator.h"
+#include "timer.h"
+
+// TODO: increase rand fuction RAND_MAX value.
 
 std::string Generator::randName()
 {
@@ -11,43 +14,33 @@ std::string Generator::randName()
 
 void Generator::generateUsers(std::vector<User>& users, int n)
 {
+	Timer timer("User generation:");
+
 	Hash hashRand;
 	User user;
 
-	int balance;
-	std::string Name;
-
 	srand(time(0));
 	for (int i = 0; i < n; i++) {
-
-		Name = randName();
-		user.setName(Name);
-
-		balance = (rand() % 1000000) + 100;
-		user.setBalance(balance);
-
-		user.setPublic_key(hashRand.toHash(std::to_string(balance) + Name));
-
+		user.setName(randName());
+		user.setBalance(rand() % 999900 + 101);
+		user.setPublic_key(hashRand.toHash(std::to_string(user.getBalance()) + user.getName()));
 		users.push_back(user);
 	}
 }
 
 void Generator::generateTransactions(std::vector<Transaction>& transactions, std::vector<User>& users, int n)
 {
+	Timer timer("Transaction generation:");
+
 	Hash hashRand;
 	Transaction transaction;
 
-	std::string Transaction_id;
-	std::string Sender_key;
-	std::string Receiver_key;
-	int Sum;
-
+	srand(time(0));
 	for (int i = 0; i < n; i++) {
-
-
-
-
-		//transaction.setTransaction_id(hashRand.toHash((Transaction_id + Sender_key + Receiver_key) + std::to_string(Sum)));
+		transaction.setSender_key(users[rand() % users.size()].getPublic_key());
+		transaction.setReceiver_key(users[rand() % users.size()].getPublic_key());
+		transaction.setSum(rand() % 1000000 + 1);
+		transaction.setTransaction_id(hashRand.toHash(transaction.getSender_key() + transaction.getReceiver_key() + std::to_string(transaction.getSum())));
 		transactions.push_back(transaction);
 	}
 }

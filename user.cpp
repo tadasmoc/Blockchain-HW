@@ -59,3 +59,13 @@ void User::printUser()
 	std::cout << "Public key: " << public_key << std::endl;
 	std::cout << "Balance:    " << balance << std::endl << std::endl;
 }
+
+void User::reduceBalance(int sum)
+{
+	balance -= sum;
+}
+
+void User::increaseBalance(int sum)
+{
+	balance += sum;
+}
