@@ -39,14 +39,13 @@ public:
 
 class Block {
 private:
-	std::string merkel_hash;	// current block hash
+	std::string block_hash;
+	std::string merkle_hash;	// current block transactions merkle hash
 	std::string prev_hash;
 	long long int timestamp;
 	int version;				// block no#
 	long int nonce;
 	int difficulty;
-
-	// Transactions
 
 	std::vector<Transaction> Btransactions;
 
@@ -61,7 +60,8 @@ public:
 	~Block();
 
 	// Get functions
-	std::string getMerkel_hash();
+	std::string getBlock_hash();
+	std::string getMerkle_hash();
 	std::string getPrev_hash();
 	long long int getTimestamp();
 	int getVersion();
@@ -70,7 +70,8 @@ public:
 	std::vector<Transaction> getTransactions();
 
 	// Set functions
-	void setMerkel_hash(std::string);
+	void setBlock_hash(std::string);
+	void setMerkle_hash(std::string);
 	void setPrev_hash(std::string);
 	void setTimestamp(long long int);
 	void setVersion(int);

@@ -11,7 +11,7 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
-
+#include "blockchain.h"
 
 class Hash
 {

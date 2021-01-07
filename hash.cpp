@@ -1,4 +1,5 @@
 #include "hash.h"
+#include "blockchain.h"
 
 Hash::Hash()
 {
@@ -19,7 +20,6 @@ std::string Hash::toHash(std::string in)
 
 	return hashedVal;
 }
-
 
 Hash::Hash(std::string arg1, std::string arg2)
 {

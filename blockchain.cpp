@@ -31,7 +31,8 @@ void Block::execTrans(std::vector<User>& users)
 
 void Block::printBlock()
 {
-	std::cout << "merkel_hash: " << merkel_hash << std::endl;
+	std::cout << "block_hash:  " << block_hash << std::endl;
+	std::cout << "merkle_hash: " << merkle_hash << std::endl;
 	std::cout << "prev_hash:   " << prev_hash << std::endl;
 	std::cout << "timestamp:   " << timestamp << std::endl;
 	std::cout << "version:     " << version << std::endl;
@@ -49,7 +50,7 @@ void Block::printBlock()
 
 Block::Block()
 {
-	merkel_hash = "";
+	merkle_hash = "";
 	prev_hash = "";
 	timestamp = timestampFunct();
 	version = 0;
@@ -57,9 +58,9 @@ Block::Block()
 	difficulty = 0;
 }
 
-Block::Block(std::string Merkel_hash, std::string Prev_hash, int Version, long int Nonce, int Difficulty)
+Block::Block(std::string Merkle_hash, std::string Prev_hash, int Version, long int Nonce, int Difficulty)
 {
-	merkel_hash = Merkel_hash;
+	merkle_hash = Merkle_hash;
 	prev_hash = Prev_hash;
 	timestamp = timestampFunct();
 	version = Version;
@@ -71,9 +72,14 @@ Block::~Block(){}
 
 // Get functions
 
-std::string Block::getMerkel_hash()
+std::string Block::getBlock_hash()
 {
-	return merkel_hash;
+	return block_hash;
+}
+
+std::string Block::getMerkle_hash()
+{
+	return merkle_hash;
 }
 
 std::string Block::getPrev_hash()
@@ -109,9 +115,14 @@ std::vector<Transaction> Block::getTransactions()
 
 // Set functions
 
-void Block::setMerkel_hash(std::string Merkel_hash)
+void Block::setBlock_hash(std::string Block_hash)
 {
-	merkel_hash = Merkel_hash;
+	block_hash = Block_hash;
+}
+
+void Block::setMerkle_hash(std::string Merkle_hash)
+{
+	merkle_hash = Merkle_hash;
 }
 
 void Block::setPrev_hash(std::string Prev_hash)
@@ -143,7 +154,6 @@ void Block::push_transaction(Transaction trans)
 {
 	Btransactions.push_back(trans);
 }
-
 
 
 
