@@ -16,14 +16,14 @@ void Generator::generateUsers(std::vector<User>& users, int n)
 {
 	Timer timer("User generation took:");
 
-	Hash hashRand;
+	Hash hash;
 	User user;
 
 	srand(time(0));
 	for (int i = 0; i < n; i++) {
 		user.setName(randName());
 		user.setBalance(rand() % 999900 + 101);
-		user.setPublic_key(hashRand.toHash(std::to_string(user.getBalance()) + user.getName()));
+		user.setPublic_key(hash.toHash(std::to_string(user.getBalance()) + user.getName()));
 		users.push_back(user);
 	}
 }
@@ -32,7 +32,7 @@ void Generator::generateTransactions(std::vector<Transaction>& transactions, std
 {
 	Timer timer("Transaction generation took:");
 
-	Hash hashRand;
+	Hash hash;
 	Transaction transaction;
 
 	srand(time(0));
@@ -40,7 +40,7 @@ void Generator::generateTransactions(std::vector<Transaction>& transactions, std
 		transaction.setSender_key(users[rand() % users.size()].getPublic_key());
 		transaction.setReceiver_key(users[rand() % users.size()].getPublic_key());
 		transaction.setSum(rand() % 1000000 + 1);
-		transaction.setTransaction_id(hashRand.toHash(transaction.getSender_key() + transaction.getReceiver_key() + std::to_string(transaction.getSum())));
+		transaction.setTransaction_id(hash.toHash(transaction.getSender_key() + transaction.getReceiver_key() + std::to_string(transaction.getSum())));
 		transactions.push_back(transaction);
 	}
 }

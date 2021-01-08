@@ -80,6 +80,7 @@ public:
 	void push_transaction(Transaction);
 
 	long long int timestampFunct();
+	bool validateTrans(Transaction trans, std::vector<User>&);
 	void execTrans(std::vector<User>&);
 	void printBlock();
 

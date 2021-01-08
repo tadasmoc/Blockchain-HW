@@ -10,8 +10,8 @@
 
 //--Settings--------------------------------------------------
 #define USR_NO 50		// Users number
-#define TRNS_NO 100		// Transactions number
-#define DIFF 3			// Mining difficulty
+#define TRNS_NO 99		// Transactions number
+#define DIFF 2			// Mining difficulty
 #define BLOCK_SIZE 10	// How many transactions in the block.
 //------------------------------------------------------------
 
@@ -24,8 +24,13 @@ std::string toMerkleHash(Block& block)
 
 	// Convert to each transaction to hash
 
-	for (int i = 0; i < trans.size(); i++) {
-		Htrans.push_back(hash.toHash(trans[i].getReceiver_key() + trans[i].getSender_key() + trans[i].getTransaction_id() + std::to_string(trans[i].getSum())));
+	if (trans.size() == 0) {
+		Htrans.push_back("");
+	}
+	else {
+		for (int i = 0; i < trans.size(); i++) {
+			Htrans.push_back(hash.toHash(trans[i].getReceiver_key() + trans[i].getSender_key() + trans[i].getTransaction_id() + std::to_string(trans[i].getSum())));
+		}
 	}
 
 	// Find merkle tree root hash
@@ -65,6 +70,12 @@ int main()
 	generator.generateTransactions(transactions, users, TRNS_NO);
 	//for (int i = 0; i < transactions.size(); i++) transactions[i].printTransaction(); // Print generated transactions
 	
+	//  Uncomment bellow to make the transactions invalid
+
+	/*for (int i = 0; i < transactions.size(); i++) {
+		transactions[i].setTransaction_id("123");
+	}*/
+
 	// Blockchain start
 
 	std::cout << "\nBlockchain simulation has been started" << std::endl;
@@ -79,7 +90,9 @@ int main()
 
 	// Blocks generation
 
-	for (int i = 0; i < transactions.size(); i++) {
+	int i = 0;
+	while (transactions.size() > 0) {
+		int maxSize = 0; // integer for setting max block size if there is less transaction in the pool than standard block size
 
 		Block block;
 		block.setTimestamp(block.timestampFunct()); // Block start time.
@@ -93,14 +106,24 @@ int main()
 
 		// --- Random selection of transactions
 
-		if (transactions.size() - BLOCK_SIZE != 0) {
+		if (transactions.size() > BLOCK_SIZE) {
 			srand(time(0));
 			r = rand() % (transactions.size() - BLOCK_SIZE);
 		}
+		else if (transactions.size() < BLOCK_SIZE) {
+			maxSize = BLOCK_SIZE - transactions.size();
+			r = 0;
+		}
 		else r = 0;
-		std::cout << "\nTransactions " << r << " to " << r + BLOCK_SIZE << " have been selected from the pool" << std::endl;
 
-		for (int t = 0; t < BLOCK_SIZE; t++) block.push_transaction(transactions[r + t]);
+		std::cout << "\nTransactions " << r << " to " << r + (BLOCK_SIZE - maxSize) << " have been selected from the pool" << std::endl;
+		for (int t = 0; t < (BLOCK_SIZE - maxSize); t++) {
+
+			// Transaction validation
+
+			bool valid = block.validateTrans(transactions[r + t], users);
+			if (valid) block.push_transaction(transactions[r + t]);
+		}
 
 		// Merkle hash of blocks transactions
 
@@ -108,7 +131,7 @@ int main()
 
 		// --- Proof of Work
 
-		std::cout << "Proof of work started with difficulty of " << DIFF << std::endl;
+		std::cout << "Proof of work started with the difficulty of " << DIFF << std::endl;
 
 		do {
 			nonce++;			
@@ -120,20 +143,22 @@ int main()
 		std::cout << "Hash has been found: " << block_hash << ", nonce value: " << nonce << std::endl;
 
 		// Delete old transactions from the pool
-		transactions.erase(transactions.begin() + r, transactions.begin() + r + BLOCK_SIZE);
+		transactions.erase(transactions.begin() + r, transactions.begin() + r + (BLOCK_SIZE - maxSize));
 
 		// Execute the block transactions
 		block.execTrans(users);
 
 		blocks.push_back(block);
 		std::cout << i << ". Transaction sucessfully executed, block added to the chain" << std::endl;
+
+		i++;
 	}
 
 	// Printing BlockChain
 
 	std::cout << std::endl;
-	for (int i = 0; i < blocks.size(); i++) {
-		blocks[i].printBlock();
+	for (int t = 0; t < blocks.size(); t++) {
+		blocks[t].printBlock();
 		std::cout << "--------------------------------------" << std::endl;
 	}
 

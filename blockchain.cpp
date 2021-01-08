@@ -9,6 +9,32 @@ long long int Block::timestampFunct()
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
+bool Block::validateTrans(Transaction trans, std::vector<User>& users)
+{
+	Hash hash;
+	bool valid = false;
+
+	if (trans.getTransaction_id() == hash.toHash(trans.getSender_key() + trans.getReceiver_key() + std::to_string(trans.getSum()))) {
+		valid = true;
+	}
+
+	if (valid) {
+		for (int i = 0; i < users.size(); i++) {
+			if (trans.getSender_key() == users[i].getPublic_key()) {
+				if (users[i].getBalance() - trans.getSum() >= 0) {
+					valid = true;
+					break;
+				}
+				else {
+					valid = false;
+					break;
+				}
+			}
+		}
+	}
+	return valid;
+}
+
 void Block::execTrans(std::vector<User>& users)
 {
 	for (int i = 0; i < Btransactions.size(); i++) {
